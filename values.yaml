@@ -109,6 +109,18 @@ uyuni:
 
     affinity: {}
 
+    persistence:
+      resourcePolicy: "keep"
+      existingClaim: ""
+      # Specify the "storageClass" used to provision the volume. Or the default
+      # StorageClass will be used (the default).
+      # Set it to "-" to disable dynamic provisioning
+      storageClass: "nfs-client"
+      subPath: ""
+      accessMode: ReadWriteOnce
+      size: 5Gi
+      annotations: {}
+
   batch:
     replicaCount: 1
 

@@ -79,4 +79,4 @@ spec:
             secretName: kube-config
         - name: uyuni-pvc
           persistentVolumeClaim:
-            claimName: uyuni-pvc
+            claimName: "{{ include "uyuni-suite.fullname" . }}-pvc"

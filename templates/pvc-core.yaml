@@ -1,0 +1,28 @@
+{{- if not .Values.uyuni.core.persistence.existingClaim -}}
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: "{{ include "uyuni-suite.fullname" . }}-pvc"
+  annotations:
+  {{- range $key, $value := .Values.uyuni.core.persistence.annotations }}
+    {{ $key }}: {{ $value | quote }}
+  {{- end }}
+  {{- if eq .Values.uyuni.core.persistence.resourcePolicy "keep" }}
+    helm.sh/resource-policy: keep
+  {{- end }}
+  labels:
+    {{- include "uyuni-suite.labels" . | nindent 4 }}
+spec:
+  accessModes:
+    - {{ .Values.uyuni.core.persistence.accessMode }}
+  resources:
+    requests:
+      storage: {{ .Values.uyuni.core.persistence.size }}
+  {{- if .Values.uyuni.core.persistence.storageClass }}
+    {{- if eq "-" .Values.uyuni.core.persistence.storageClass }}
+  storageClassName: ""
+    {{- else }}
+  storageClassName: {{ .Values.uyuni.core.persistence.storageClass }}
+    {{- end }}
+  {{- end }}
+{{- end }}
