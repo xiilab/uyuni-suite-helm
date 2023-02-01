@@ -8,8 +8,8 @@ spec:
   type: {{ .Values.uyuni.batch.service.type }}
   ports:
     - port: {{ .Values.uyuni.batch.service.port }}
-      targetPort: http
+      targetPort: 8080
       protocol: TCP
-      name: http
+      name: tomcat
   selector:
     app: uyuni-suite-batch

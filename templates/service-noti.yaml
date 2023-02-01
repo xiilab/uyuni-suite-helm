@@ -8,8 +8,8 @@ spec:
   type: {{ .Values.uyuni.noti.service.type }}
   ports:
     - port: {{ .Values.uyuni.noti.service.port }}
-      targetPort: http
+      targetPort: 8080
       protocol: TCP
-      name: http
+      name: tomcat
   selector:
     app: uyuni-suite-noti
