@@ -2,14 +2,14 @@
 apiVersion: autoscaling/v2beta1
 kind: HorizontalPodAutoscaler
 metadata:
-  name: {{ include "uyuni-suite.fullname" . }}
+  name: "{{ include "uyuni-suite.fullname" . }}-batch"
   labels:
     {{- include "uyuni-suite.labels" . | nindent 4 }}
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: {{ include "uyuni-suite.fullname" . }}
+    name: "{{ include "uyuni-suite.fullname" . }}-batch"
   minReplicas: {{ .Values.uyuni.batch.autoscaling.minReplicas }}
   maxReplicas: {{ .Values.uyuni.batch.autoscaling.maxReplicas }}
   metrics:
