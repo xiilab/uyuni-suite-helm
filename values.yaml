@@ -1,7 +1,6 @@
 # Default values for uyuni-suite-helm.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
-
 uyuni:
   common:
     serviceAccount:
@@ -14,21 +13,14 @@ uyuni:
       name: ""
 
     ingress:
-      enabled: false
-      className: ""
+      enabled: true
+      className: "nginx"
       annotations: { }
-      # kubernetes.io/ingress.class: nginx
+      # kubernetes.io/ingress.class: nginx.conf
       # kubernetes.io/tls-acme: "true"
       hosts:
-        - host: uyuni-suite.xiilab.com
-          paths:
-            - path: /
-              pathType: ImplementationSpecific
-              backend:
-                service:
-                  name: keycloak-external
-                  port:
-                    number: 80
+        - host: test.uyuni-suite.xiilab.com
+          paths: []
       tls: [ ]
       #  - secretName: chart-example-tls
       #    hosts:
@@ -135,13 +127,13 @@ uyuni:
     - name: KEYCLOAK_REALM
       value: uyuni
     - name: KEYCLOAK_AUTHSERVERURL
-      value: http://uyuni-suite.xiilab.com:32080/auth
+      value: http://test.uyuni-suite.xiilab.com:32080/auth
     - name: KEYCLOAK_RESOURCE
       value: uyuni
     - name: K8S_NAMESPACE
       value: uyuni-suite
     - name: UYUNIHOST
-      value: 192.168.1.235
+      value: test.uyuni-suite.xiilab.com
 
     service:
       type: ClusterIP
@@ -222,7 +214,7 @@ uyuni:
     - name: KEYCLOAK_REALM
       value: uyuni
     - name: KEYCLOAK_AUTHSERVERURL
-      value: http://uyuni-suite.xiilab.com:32080/auth
+      value: http://test.uyuni-suite.xiilab.com:32080/auth
     - name: KEYCLOAK_RESOURCE
       value: uyuni
     - name: K8S_NAMESPACE

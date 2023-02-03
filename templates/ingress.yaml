@@ -1,8 +1,8 @@
 {{- if .Values.uyuni.common.ingress.enabled -}}
 {{- $fullName := include "uyuni-suite.fullname" . -}}
-{{- if and .Values.ingress.className (not (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion)) }}
-  {{- if not (hasKey .Values.ingress.annotations "kubernetes.io/ingress.class") }}
-  {{- $_ := set .Values.ingress.annotations "kubernetes.io/ingress.class" .Values.ingress.className}}
+{{- if and .Values.uyuni.common.ingress.className (not (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion)) }}
+  {{- if not (hasKey .Values.uyuni.common.ingress.annotations "kubernetes.io/ingress.class") }}
+  {{- $_ := set .Values.uyuni.common.ingress.annotations "kubernetes.io/ingress.class" .Values.uyuni.common.ingress.className}}
   {{- end }}
 {{- end }}
 {{- if semverCompare ">=1.19-0" .Capabilities.KubeVersion.GitVersion -}}
@@ -40,6 +40,55 @@ spec:
     - host: {{ .host | quote }}
       http:
         paths:
+          - path: "/auth"
+            pathType: Prefix
+            backend:
+              service:
+                name: keycloak-external
+                port:
+                  number: 80
+          - path: "/api/v1/monitor"
+            pathType: Prefix
+            backend:
+              service:
+                name: "{{ $fullName }}-core"
+                port:
+                  number: 8080
+          - path: "/api/v1/manager"
+            pathType: Prefix
+            backend:
+              service:
+                name: "{{ $fullName }}-core"
+                port:
+                  number: 8080
+          - path: "/api/v1/noti"
+            pathType: Prefix
+            backend:
+              service:
+                name: "{{ $fullName }}-noti"
+                port:
+                  number: 8080
+          - path: "/manager/ws"
+            pathType: Prefix
+            backend:
+              service:
+                name: "{{ $fullName }}-core"
+                port:
+                  number: 8080
+          - path: "/docs"
+            pathType: Prefix
+            backend:
+              service:
+                name: "{{ $fullName }}-core"
+                port:
+                  number: 8080
+          - path: "/"
+            pathType: Prefix
+            backend:
+              service:
+                name: "{{ $fullName }}-frontend"
+                port:
+                  number: 80
           {{- range .paths }}
           - path: {{ .path }}
             {{- if and .pathType (semverCompare ">=1.18-0" $.Capabilities.KubeVersion.GitVersion) }}
