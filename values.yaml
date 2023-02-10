@@ -3,6 +3,9 @@
 # Declare variables to be passed into your templates.
 uyuni:
   common:
+    nameOverride: ""
+    fullnameOverride: ""
+
     serviceAccount:
       # Specifies whether a service account should be created
       create: true
@@ -26,12 +29,30 @@ uyuni:
       #    hosts:
       #      - chart-example.local
 
+
+    # keycloak:
+    #   url: "http://uyuni-suite.xiilab.com:32080/auth"
+    #   keycloak url이 내부망이면서 도메인 지정하여 사용할 때 hostAliases를 설정.
+    #   hostAliases:
+    #   - ip: "192.168.1.235"
+    #     hostnames:
+    #     - "uyuni-suite.xiilab.com"
     keycloak:
-      url: "http://uyuni-suite.xiilab.com:32080/auth"
-      hostAliases:
-       - ip: "192.168.1.235"
-         hostnames:
-           - "uyuni-suite.xiilab.com"
+      url: "http://192.168.1.235:30051/auth"
+      hostAliases: []
+
+    persistence:
+      enabled: true
+      resourcePolicy: "keep"
+      existingClaim: ""
+      # Specify the "storageClass" used to provision the volume. Or the default
+      # StorageClass will be used (the default).
+      # Set it to "-" to disable dynamic provisioning
+      storageClass: "nfs-client"
+      subPath: ""
+      accessMode: ReadWriteOnce
+      size: 5Gi
+      annotations: { }
 
   frontend:
     replicaCount: 1
@@ -43,14 +64,9 @@ uyuni:
       tag: "0.4.37-stag"
 
     imagePullSecrets: []
-    nameOverride: ""
-    fullnameOverride: ""
-
     podAnnotations: {}
-
     podSecurityContext: {}
     # fsGroup: 2000
-
     securityContext: {}
       # capabilities:
       #   drop:
@@ -89,11 +105,8 @@ uyuni:
       maxReplicas: 100
       targetCPUUtilizationPercentage: 80
       # targetMemoryUtilizationPercentage: 80
-
     nodeSelector: {}
-
     tolerations: []
-
     affinity: {}
 
   core:
@@ -106,14 +119,9 @@ uyuni:
       tag: "0.4.11-stag"
 
     imagePullSecrets: []
-    nameOverride: ""
-    fullnameOverride: ""
-
     podAnnotations: {}
-
     podSecurityContext: {}
       # fsGroup: 2000
-
     securityContext: {}
       # capabilities:
       #   drop:
@@ -154,22 +162,8 @@ uyuni:
       # targetMemoryUtilizationPercentage: 80
 
     nodeSelector: {}
-
     tolerations: []
-
     affinity: {}
-
-    persistence:
-      resourcePolicy: "keep"
-      existingClaim: ""
-      # Specify the "storageClass" used to provision the volume. Or the default
-      # StorageClass will be used (the default).
-      # Set it to "-" to disable dynamic provisioning
-      storageClass: "nfs-client"
-      subPath: ""
-      accessMode: ReadWriteOnce
-      size: 5Gi
-      annotations: {}
 
   batch:
     replicaCount: 1
@@ -181,11 +175,7 @@ uyuni:
       tag: "0.4.11-stag"
 
     imagePullSecrets: []
-    nameOverride: ""
-    fullnameOverride: ""
-
     podAnnotations: {}
-
     podSecurityContext: {}
     # fsGroup: 2000
 
@@ -229,9 +219,7 @@ uyuni:
       # targetMemoryUtilizationPercentage: 80
 
     nodeSelector: {}
-
     tolerations: []
-
     affinity: {}
 
   noti:
@@ -244,14 +232,9 @@ uyuni:
       tag: "0.4.11-stag"
 
     imagePullSecrets: []
-    nameOverride: ""
-    fullnameOverride: ""
-
     podAnnotations: {}
-
     podSecurityContext: {}
     # fsGroup: 2000
-
     securityContext: {}
       # capabilities:
       #   drop:
@@ -292,9 +275,7 @@ uyuni:
       # targetMemoryUtilizationPercentage: 80
 
     nodeSelector: {}
-
     tolerations: []
-
     affinity: {}
 
 mariadb:

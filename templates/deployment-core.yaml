@@ -96,5 +96,10 @@ spec:
           secret:
             secretName: kube-config
         - name: uyuni-pvc
+          {{- if .Values.uyuni.common.persistence.enabled }}
           persistentVolumeClaim:
-            claimName: "{{ include "uyuni-suite.fullname" . }}-pvc"
+            claimName: {{ if .Values.uyuni.common.persistence.existingClaim }}{{ .Values.uyuni.common.persistence.existingClaim }}
+            {{- else }}"{{ include "uyuni-suite.fullname" . }}-pvc"{{- end }}
+          {{- else }}
+          emptyDir: {}
+          {{- end }}
