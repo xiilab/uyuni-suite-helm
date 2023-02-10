@@ -5,7 +5,7 @@ metadata:
   labels:
     {{- include "uyuni-suite.labels" . | nindent 4 }}
 spec:
-  type: {{ .Values.uyuni.batch.service.type }}
+  type: {{ .Values.uyuni.frontend.service.type }}
   ports:
     - port: {{ .Values.uyuni.frontend.service.port }}
       targetPort: http

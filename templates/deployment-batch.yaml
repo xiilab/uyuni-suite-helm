@@ -36,6 +36,8 @@ spec:
           env:
           - name: SPRING_PROFILES_ACTIVE
             value: dev
+          - name: K8S_NAMESPACE
+            value: "{{ .Release.Namespace }}"
           {{- if .Values.uyuni.batch.env }}
           {{- include "uyuni-suite.tplvalues.render" (dict "value" .Values.uyuni.batch.env "context" $) | nindent 12 }}
           {{- end }}
