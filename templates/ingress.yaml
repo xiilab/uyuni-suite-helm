@@ -40,13 +40,6 @@ spec:
     - host: {{ .host | quote }}
       http:
         paths:
-          - path: "/auth"
-            pathType: Prefix
-            backend:
-              service:
-                name: keycloak-external
-                port:
-                  number: 80
           - path: "/api/v1/monitor"
             pathType: Prefix
             backend:

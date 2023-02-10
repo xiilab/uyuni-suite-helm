@@ -27,14 +27,32 @@ spec:
       serviceAccountName: {{ include "uyuni-suite.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.uyuni.core.podSecurityContext | nindent 8 }}
+      {{- with .Values.uyuni.common.keycloak.hostAliases }}
+      hostAliases:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.uyuni.core.securityContext | nindent 12 }}
           image: "{{ .Values.uyuni.core.image.repository }}:{{ .Values.uyuni.core.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.uyuni.core.image.pullPolicy }}
-          {{- if .Values.uyuni.core.env }}
           env:
+          - name: SPRING_PROFILES_ACTIVE
+            value: dev
+          - name: KEYCLOAK_REALM
+            value: uyuni
+          - name: KEYCLOAK_AUTHSERVERURL
+            value: "{{ .Values.uyuni.common.keycloak.url }}"
+          - name: KEYCLOAK_RESOURCE
+            value: uyuni
+          - name: K8S_NAMESPACE
+            value: "{{ .Release.Namespace }}"
+          - name: UYUNIHOST
+          {{- with (index .Values.uyuni.common.ingress.hosts 0) }}
+            value: "{{ .host }}"
+          {{- end }}
+          {{- if .Values.uyuni.core.env }}
           {{- include "uyuni-suite.tplvalues.render" (dict "value" .Values.uyuni.core.env "context" $) | nindent 12 }}
           {{- end }}
           ports:

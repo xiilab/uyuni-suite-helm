@@ -33,8 +33,14 @@ spec:
             {{- toYaml .Values.uyuni.noti.securityContext | nindent 12 }}
           image: "{{ .Values.uyuni.noti.image.repository }}:{{ .Values.uyuni.noti.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.uyuni.noti.image.pullPolicy }}
-          {{- if .Values.uyuni.noti.env }}
           env:
+          - name: SPRING_PROFILES_ACTIVE
+            value: dev
+          - name: SPRING_KAFKA_CONSUMER_BOOTSTRAP-SERVERS
+            value: kafka-cp-kafka.kafka.svc:9092
+          - name: SPRING_KAFKA_PRODUCER_BOOTSTRAP-SERVERS
+            value: kafka-cp-kafka.kafka.svc:9092
+          {{- if .Values.uyuni.noti.env }}
           {{- include "uyuni-suite.tplvalues.render" (dict "value" .Values.uyuni.noti.env "context" $) | nindent 12 }}
           {{- end }}
           ports:

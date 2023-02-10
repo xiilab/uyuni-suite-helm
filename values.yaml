@@ -26,6 +26,13 @@ uyuni:
       #    hosts:
       #      - chart-example.local
 
+    keycloak:
+      url: "http://uyuni-suite.xiilab.com:32080/auth"
+      hostAliases:
+       - ip: "192.168.1.235"
+         hostnames:
+           - "uyuni-suite.xiilab.com"
+
   frontend:
     replicaCount: 1
 
@@ -33,7 +40,7 @@ uyuni:
       repository: xiilab/uyuni-suite-frontend
       pullPolicy: IfNotPresent
       # Overrides the image tag whose default is the chart appVersion.
-      tag: "0.3.8-stag"
+      tag: "0.4.37-stag"
 
     imagePullSecrets: []
     nameOverride: ""
@@ -96,7 +103,7 @@ uyuni:
       repository: xiilab/uyuni-manager-core
       pullPolicy: IfNotPresent
       # Overrides the image tag whose default is the chart appVersion.
-      tag: "0.3.1-stag"
+      tag: "0.4.11-stag"
 
     imagePullSecrets: []
     nameOverride: ""
@@ -121,19 +128,7 @@ uyuni:
     ##  - name: TZ
     ##    value: "Europe/Paris"
     ##
-    env:
-    - name: SPRING_PROFILES_ACTIVE
-      value: dev
-    - name: KEYCLOAK_REALM
-      value: uyuni
-    - name: KEYCLOAK_AUTHSERVERURL
-      value: http://test.uyuni-suite.xiilab.com:32080/auth
-    - name: KEYCLOAK_RESOURCE
-      value: uyuni
-    - name: K8S_NAMESPACE
-      value: uyuni-suite
-    - name: UYUNIHOST
-      value: test.uyuni-suite.xiilab.com
+    env: []
 
     service:
       type: ClusterIP
@@ -183,7 +178,7 @@ uyuni:
       repository: xiilab/uyuni-manager-batch
       pullPolicy: IfNotPresent
       # Overrides the image tag whose default is the chart appVersion.
-      tag: "0.3.1-stag"
+      tag: "0.4.11-stag"
 
     imagePullSecrets: []
     nameOverride: ""
@@ -208,17 +203,7 @@ uyuni:
     ##  - name: TZ
     ##    value: "Europe/Paris"
     ##
-    env:
-    - name: SPRING_PROFILES_ACTIVE
-      value: dev
-    - name: KEYCLOAK_REALM
-      value: uyuni
-    - name: KEYCLOAK_AUTHSERVERURL
-      value: http://test.uyuni-suite.xiilab.com:32080/auth
-    - name: KEYCLOAK_RESOURCE
-      value: uyuni
-    - name: K8S_NAMESPACE
-      value: uyuni-suite
+    env: []
 
     service:
       type: ClusterIP
@@ -256,7 +241,7 @@ uyuni:
       repository: xiilab/uyuni-manager-noti
       pullPolicy: IfNotPresent
       # Overrides the image tag whose default is the chart appVersion.
-      tag: "0.3.1-stag"
+      tag: "0.4.11-stag"
 
     imagePullSecrets: []
     nameOverride: ""
@@ -281,13 +266,7 @@ uyuni:
     ##  - name: TZ
     ##    value: "Europe/Paris"
     ##
-    env:
-    - name: SPRING_PROFILES_ACTIVE
-      value: dev
-    - name: SPRING_KAFKA_CONSUMER_BOOTSTRAP-SERVERS
-      value: kafka-cp-kafka.kafka.svc:9092
-    - name: SPRING_KAFKA_PRODUCER_BOOTSTRAP-SERVERS
-      value: kafka-cp-kafka.kafka.svc:9092
+    env: []
 
     service:
       type: ClusterIP

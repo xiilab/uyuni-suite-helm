@@ -33,8 +33,10 @@ spec:
             {{- toYaml .Values.uyuni.batch.securityContext | nindent 12 }}
           image: "{{ .Values.uyuni.batch.image.repository }}:{{ .Values.uyuni.batch.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.uyuni.batch.image.pullPolicy }}
-          {{- if .Values.uyuni.batch.env }}
           env:
+          - name: SPRING_PROFILES_ACTIVE
+            value: dev
+          {{- if .Values.uyuni.batch.env }}
           {{- include "uyuni-suite.tplvalues.render" (dict "value" .Values.uyuni.batch.env "context" $) | nindent 12 }}
           {{- end }}
           ports:

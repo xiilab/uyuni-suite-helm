@@ -33,8 +33,14 @@ spec:
             {{- toYaml .Values.uyuni.frontend.securityContext | nindent 12 }}
           image: "{{ .Values.uyuni.frontend.image.repository }}:{{ .Values.uyuni.frontend.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.uyuni.frontend.image.pullPolicy }}
-          {{- if .Values.uyuni.frontend.env }}
           env:
+          - name: REACT_APP_KEYCLOAK_REALM
+            value: uyuni
+          - name: REACT_APP_KEYCLOAK_CLIENT_ID
+            value: uyuni
+          - name: REACT_APP_KEYCLOAK_URL
+            value: "{{ .Values.uyuni.common.keycloak.url }}"
+          {{- if .Values.uyuni.frontend.env }}
           {{- include "uyuni-suite.tplvalues.render" (dict "value" .Values.uyuni.frontend.env "context" $) | nindent 12 }}
           {{- end }}
           ports:
