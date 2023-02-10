@@ -29,6 +29,9 @@ uyuni:
       #    hosts:
       #      - chart-example.local
 
+    service:
+      type: NodePort
+      nodePort: "30100"
 
     # keycloak:
     #   url: "http://uyuni-suite.xiilab.com:32080/auth"
@@ -48,7 +51,7 @@ uyuni:
       # Specify the "storageClass" used to provision the volume. Or the default
       # StorageClass will be used (the default).
       # Set it to "-" to disable dynamic provisioning
-      storageClass: "nfs-client"
+      storageClass: ""
       subPath: ""
       accessMode: ReadWriteOnce
       size: 5Gi
@@ -82,10 +85,6 @@ uyuni:
     ##    value: "Europe/Paris"
     ##
     env: []
-
-    service:
-      type: NodePort
-      port: 80
 
     resources: {}
       # We usually recommend not to specify default resources and to leave this as a conscious
@@ -137,10 +136,6 @@ uyuni:
     ##    value: "Europe/Paris"
     ##
     env: []
-
-    service:
-      type: ClusterIP
-      port: 8080
 
     resources: {}
       # We usually recommend not to specify default resources and to leave this as a conscious
@@ -195,10 +190,6 @@ uyuni:
     ##
     env: []
 
-    service:
-      type: ClusterIP
-      port: 8080
-
     resources: {}
       # We usually recommend not to specify default resources and to leave this as a conscious
       # choice for the user. This also increases chances charts run on environments with little
@@ -250,10 +241,6 @@ uyuni:
     ##    value: "Europe/Paris"
     ##
     env: []
-
-    service:
-      type: ClusterIP
-      port: 8080
 
     resources: {}
       # We usually recommend not to specify default resources and to leave this as a conscious
