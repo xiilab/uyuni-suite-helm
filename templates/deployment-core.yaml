@@ -99,7 +99,7 @@ spec:
           {{- if .Values.uyuni.common.persistence.enabled }}
           persistentVolumeClaim:
             claimName: {{ if .Values.uyuni.common.persistence.existingClaim }}{{ .Values.uyuni.common.persistence.existingClaim }}
-            {{- else }}"{{ include "uyuni-suite.fullname" . }}-pvc"{{- end }}
+            {{- else }}"uyuni-pvc"{{- end }}
           {{- else }}
           emptyDir: {}
           {{- end }}

@@ -2,7 +2,7 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: "{{ include "uyuni-suite.fullname" . }}-pvc"
+  name: "uyuni-pvc"
   annotations:
   {{- range $key, $value := .Values.uyuni.common.persistence.annotations }}
     {{ $key }}: {{ $value | quote }}
