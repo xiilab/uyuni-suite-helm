@@ -5,9 +5,9 @@ metadata:
   labels:
     {{- include "uyuni-suite.labels" . | nindent 4 }}
 spec:
-  type: {{ .Values.uyuni.batch.service.type }}
+  type: ClusterIP
   ports:
-    - port: {{ .Values.uyuni.batch.service.port }}
+    - port: 8080
       targetPort: 8080
       protocol: TCP
       name: tomcat
