@@ -1,12 +1,15 @@
+
 # uyuni-suite-helm
 
-## clone repository 
+Uyuni Suite 을 설치하기 워한 Helm 파일 입니다.
 
-```
-git clone https://github.com/xiilab/uyuni-suite-helm.git
-```
 
-## change value.yaml
+
+
+## 설정
+
+value.yaml 파일을 통하여 설치할 서버 환경에 맞추어서 설치 진행
+
 
 ```yaml
 uyuni:
@@ -68,14 +71,16 @@ uyuni:
     podSecurityContext: {}
     # fsGroup: 2000
     securityContext: {}
-
 ```
 
+## Deployment
 
-## install
+파일 설정후 다음 명령어를 통하여 설치 진행
 
+```bash
+helm install -f <values.yaml경로> <helm 이름 > <helm chart 경로> -n <네임스페이스>
 ```
-helm install -f values.yaml .
+
+```bash
+helm upgrade -f values.yaml uyuni-suite . -n uyuni-test
 ```
-
-
