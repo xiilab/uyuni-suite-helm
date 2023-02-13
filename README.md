@@ -84,3 +84,14 @@ helm install -f <values.yaml경로> <helm 이름 > <helm chart 경로> -n <네�
 ```bash
 helm upgrade -f values.yaml uyuni-suite . -n uyuni-test
 ```
+## Installation
+
+Install my-project with npm
+
+```bash
+export NODE_PORT=$(kubectl get --namespace uyuni-test -o jsonpath="{.spec.ports[0].nodePort}" services uyuni-suite-frontend)
+export NODE_IP=$(kubectl get nodes --namespace uyuni-test -o jsonpath="{.items[0].status.addresses[0].address}")
+echo http://$NODE_IP:$NODE_PORT
+http://192.168.1.154:30100
+```
+    
